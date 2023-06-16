@@ -24,6 +24,7 @@
 *
 */
 
+// #undef UNITY_EDITOR
 
 
 
@@ -43,7 +44,7 @@ using Windows.Networking;
 
 public class UDPConnection : MonoBehaviour {
 
-    private int port = 48055;
+   [SerializeField] public int port = 1001;
 
 #if !UNITY_EDITOR && UNITY_METRO
     private string lastReceivedUDPPacket = "";
@@ -75,6 +76,7 @@ public class UDPConnection : MonoBehaviour {
         }
         Debug.Log("DatagramSocket setup done...");
     }
+    
 
   
     
@@ -119,7 +121,7 @@ public class UDPConnection : MonoBehaviour {
         }
     }
 #else
-    public string GetLatestUDPPacket() {return ""; }
+    public string GetLatestUDPPacket() {return "255 255 10 10 10 255 0"; }
 #endif
 }
 
