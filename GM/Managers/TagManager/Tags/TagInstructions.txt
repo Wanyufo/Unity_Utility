@@ -1,0 +1,6 @@
+﻿
+Any Enum that is public can be used as a Tag
+To mark an object with a Tag, use a Tagger Script, which is created as follows:
+ - Copy the "GenericTag.cs" Script and change the File and Class name, as well as the Serialized Field to the Enum you want to use as a Tag.
+
+Use the Methods provided in the TagManager.
