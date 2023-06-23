@@ -35,7 +35,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
-#if !UNITY_EDITOR && UNITY_METRO
+#if !UNITY_EDITOR && Unity_WSA
 using Windows.Networking.Sockets;
 using Windows.Networking.Connectivity;
 using Windows.Networking;
@@ -46,7 +46,7 @@ public class UDPConnection : MonoBehaviour {
 
    [SerializeField] public int port = 1001;
 
-#if !UNITY_EDITOR && UNITY_METRO
+#if !UNITY_EDITOR && Unity_WSA
     private string lastReceivedUDPPacket = "";
     private readonly static Queue<string> receivedUDPPacketQueue = new Queue<string>();
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
@@ -16,6 +17,14 @@ namespace Unity_Utilities.GM.Managers.NetworkManager
     // #undef UNITY_EDITOR
     public class NetworkManager : MonoBehaviour, IManager
     {
+        public List<NetworkConnection> Connections { get; private set; } = new List<NetworkConnection>();
+
+        public void CreateNetworkConnection(IPEndPoint endPoint, NetworkConnection connection)
+        {
+            Connections.Add(connection);
+        }
+
+
         //###############################################################
         // TODO Rewrite this with the new NetworkConnection class. and make all of it as generic as possible.
         //###############################################################
