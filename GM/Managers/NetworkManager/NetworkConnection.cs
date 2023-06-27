@@ -4,6 +4,9 @@ using System.Threading;
 
 namespace Unity_Utilities.GM.Managers.NetworkManager
 {
+    /// <summary>
+    /// Abstract class for Network Connections. Methods return booleans success and data as out parameters.
+    /// </summary>
     public abstract class NetworkConnection
     {
         private IPEndPoint _endPoint;
@@ -18,56 +21,80 @@ namespace Unity_Utilities.GM.Managers.NetworkManager
 
         public bool Initialize()
         {
-            // doing this is a version of the template Method Pattern
+            if (IsOpen)
+            {
+                return false;
+            }
+
+            // template Method Pattern
             bool internalSuccess = ConcreteInitialze();
             IsOpen = internalSuccess;
             return internalSuccess;
         }
 
-        protected abstract bool ConcreteInitialze();
-
-        // todo use template method pattern here as well
-        public abstract void Send(byte[] data);
-        public abstract byte[] Receive();
-
-        public void Close()
+        public bool Send(byte[] data)
         {
-            IsOpen = false;
-            ConcreteClose();
+            if (!IsOpen)
+            {
+                return false;
+            }
+
+            return ConcreteSend(data);
         }
 
-        protected abstract void ConcreteClose();
+        public bool Receive(out byte[] data)
+        {
+            if (!IsOpen)
+            {
+                data = null;
+                return false;
+            }
+
+            return ConcreteReceive(out data);
+        }
+
+        public bool Close()
+        {
+            if (!IsOpen)
+            {
+                return false;
+            }
+
+            IsOpen = false;
+            return ConcreteClose();
+        }
+
+
+        protected abstract bool ConcreteInitialze();
+        protected abstract bool ConcreteSend(byte[] data);
+        protected abstract bool ConcreteReceive(out byte[] data);
+        protected abstract bool ConcreteClose();
+
+        // QoL Methods
+
+        /// <summary>
+        /// Send String encoded in UTF8
+        /// </summary>
+        /// <param name="data">String to send</param>
+        /// <returns>bool success</returns>
+        public bool SendString(string data)
+        {
+            return Send(System.Text.Encoding.UTF8.GetBytes(data));
+        }
+
+        /// <summary>
+        /// Receive String encoded in UTF8
+        /// </summary>
+        /// <param name="data">received data as string</param>
+        /// <returns>bool success</returns>
+        public bool ReceiveString(out string data)
+        {
+            bool success = Receive(out byte[] dataBytes);
+            data = System.Text.Encoding.UTF8.GetString(dataBytes);
+            return success;
+        }
+
         // TODO Add any other needed methods (if any)
         // Add QoL methods like SendString, ReceiveString, etc.
-    }
-}
-
-namespace Unity_Utilities.GM.Managers.NetworkManager
-{
-    public class UDP_UWP_NetworkConnection : NetworkConnection
-    {
-        public UDP_UWP_NetworkConnection(IPEndPoint endPoint) : base(endPoint)
-        {
-        }
-
-        protected override bool ConcreteInitialze()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Send(byte[] data)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override byte[] Receive()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void ConcreteClose()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
