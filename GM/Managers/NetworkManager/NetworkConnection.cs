@@ -94,7 +94,6 @@ namespace Unity_Utilities.GM.Managers.NetworkManager
             return success;
         }
 
-        // TODO Add any other needed methods (if any)
-        // Add QoL methods like SendString, ReceiveString, etc.
+        public abstract bool GetIPFromHostName(string hostName, out IPAddress[] ipAddresses);
     }
 }
