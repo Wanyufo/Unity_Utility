@@ -40,7 +40,8 @@ namespace Unity_Utilities.GM.Managers.NetworkManager
 {
     
     
-    // TODO Test this Socket type. If successful, implement the missing Methods. Else try using the NetworkManager version from the CollabMR Project.
+    // TODO Test this Socket type. If successful, implement the missing Methods.
+    // TODO Write UDP_NetworkConnection.cs for non-UWP platforms. See NetworkManager_Old.cs for reference.
     public class UDP_UWP_NetworkConnection_Qian : NetworkConnection
     {
 #if !UNITY_EDITOR && Unity_WSA
